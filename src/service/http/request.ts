@@ -1,5 +1,7 @@
 import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { local } from "@/utils/cache"
+import { cacheKeys } from "@/type/cacheKeys"
 
 interface HYInstanceInterceptors<T = AxiosResponse> {
   requestInterceptor?: (config: AxiosRequestConfig) => AxiosRequestConfig
@@ -21,6 +23,8 @@ class HYRequest {
     // 全局的拦截器
     this.instance.interceptors.request.use(
       (config) => {
+
+        config.headers.Authorization = 'Bearer ' + local.getCache(cacheKeys.TOKEN)
         return config
       },
       (err) => {

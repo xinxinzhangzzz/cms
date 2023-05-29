@@ -1,3 +1,5 @@
 export enum cacheKeys {
-	TOKEN = "TOKEN_VALUE"
+	TOKEN = "TOKEN_VALUE",
+	USERINFO = "USER_INFO",
+	USER_ROLE_MENU_LIST = "USER_MENU_LIST"
 }
