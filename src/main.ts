@@ -1,6 +1,7 @@
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import "normalize.css"
 import Antd from 'ant-design-vue';
 
 
