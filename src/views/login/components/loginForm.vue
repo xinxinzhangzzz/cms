@@ -15,7 +15,7 @@
       </a-form-item>
 
       <a-form-item class="pwdContainer">
-        <a-checkbox v-model:checked="isRemmberPwd" @change="changeRemmberPwd">记住密码</a-checkbox>
+        <a-checkbox v-model:checked="isRemmberPwd">记住密码</a-checkbox>
         <a-button type="link">忘记密码</a-button>
       </a-form-item>
 
@@ -29,19 +29,20 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { SketchOutlined } from '@ant-design/icons-vue'
 import type { ILoginForm } from './loginForm'
 import useLoginStore from '@/stores/login'
 import { InputPassword } from 'ant-design-vue'
+import { local } from '@/utils/cache'
 
 const loginStore = useLoginStore()
 
-const isRemmberPwd = ref(false)
+const isRemmberPwd = ref<boolean>(local.getCache('isRemmberPwd') ?? false)
 
-const changeRemmberPwd = () => {
-  console.log(isRemmberPwd.value)
-}
+watch(isRemmberPwd, (newValue) => {
+  local.setCache('isRemmberPwd', newValue)
+})
 
 const labelCol = ref({
   span: 6
@@ -50,8 +51,8 @@ const labelCol = ref({
 const formRef = ref()
 
 const form: ILoginForm = reactive({
-  name: 'coderwhy',
-  password: '123456'
+  name: local.getCache('USER_NAME') ?? '',
+  password: local.getCache('PASS_WORD') ?? ''
 })
 
 const rules = {

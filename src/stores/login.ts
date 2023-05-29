@@ -7,6 +7,8 @@ import type { ILogin } from "@/service/type/login"
 import type { IState } from "./loginType"
 import { message } from "ant-design-vue" 
 
+const USER_NAME = "USER_NAME"
+const PASS_WORD = "PASS_WORD"
 
 const useLoginStore = defineStore("login", {
 	state: (): IState => {
@@ -27,6 +29,15 @@ const useLoginStore = defineStore("login", {
 			this.name = res.name
 			local.setCache(cacheKeys.TOKEN, res.token)
 
+			const isRemmberPwd = local.getCache("isRemmberPwd")
+			if(isRemmberPwd) {
+				local.setCache(USER_NAME, account.name)
+				local.setCache(PASS_WORD, account.password)
+			}else {
+				local.removeCache(USER_NAME)
+				local.removeCache(PASS_WORD)
+			}
+
 			await this.getUserInfoAction()
 
 			router.replace("/main")
@@ -46,13 +57,14 @@ const useLoginStore = defineStore("login", {
 		},
 
 		async getUserMenuTreeAction() {
-			console.log(this.userInfo)
 			const res = await getMenuTreeByRoleId(this.userInfo?.role.id)
 			local.setCache(cacheKeys.USER_ROLE_MENU_LIST, res)
 		},
 
 		logout() {
-		 local.clearCache()
+		 local.removeCache(cacheKeys.TOKEN)
+		 local.removeCache(cacheKeys.USERINFO)
+		 local.removeCache(cacheKeys.USER_ROLE_MENU_LIST)
 			router.replace("/login")
 			message.success({
 				content: "已成功退出登录!"
