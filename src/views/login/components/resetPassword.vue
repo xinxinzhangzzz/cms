@@ -1,7 +1,7 @@
 <template>
   <div class="login-form">
     <div class="title">
-      <GithubOutlined class="icon" />
+      <EditFilled class="icon" />
       <div class="desc">xinxinzhangzzz</div>
     </div>
 
@@ -14,14 +14,17 @@
         <InputPassword v-model:value="form.password" autocomplete="off" />
       </a-form-item>
 
+      <a-form-item label="确认密码">
+        <InputPassword autocomplete="off" />
+      </a-form-item>
+
       <a-form-item class="pwdContainer">
-        <a-checkbox v-model:checked="isRemmberPwd">记住密码</a-checkbox>
-        <a-button type="link" @click="resetPwdClick">忘记密码</a-button>
+        <a-button type="link" @click="resetPwdClick">已有账号?去登录!</a-button>
       </a-form-item>
 
       <a-form-item>
         <a-button class="loginBtn" type="primary" :loading="loadingState" @click="loginClick"
-          >登 录</a-button
+          >保 存</a-button
         >
       </a-form-item>
     </a-form>
@@ -30,7 +33,7 @@
 
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
-import { GithubOutlined } from '@ant-design/icons-vue'
+import { EditFilled } from '@ant-design/icons-vue'
 import type { ILoginForm } from './loginForm'
 import useLoginStore from '@/stores/login'
 import { InputPassword } from 'ant-design-vue'
@@ -51,8 +54,8 @@ const labelCol = ref({
 const formRef = ref()
 
 const form: ILoginForm = reactive({
-  name: local.getCache('USER_NAME') ?? '',
-  password: local.getCache('PASS_WORD') ?? ''
+  name: '',
+  password: ''
 })
 
 const rules = {
