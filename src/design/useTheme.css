@@ -8,3 +8,7 @@
 .ant-btn-link:not(:disabled):hover {
   color: #000;
 }
+
+.ant-menu-dark {
+  background-color: #020b15;
+}
