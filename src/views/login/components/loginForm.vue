@@ -14,6 +14,11 @@
         <InputPassword v-model:value="form.password" autocomplete="off" />
       </a-form-item>
 
+      <a-form-item class="pwdContainer">
+        <a-checkbox v-model:checked="isRemmberPwd" @change="changeRemmberPwd">记住密码</a-checkbox>
+        <a-button type="link">忘记密码</a-button>
+      </a-form-item>
+
       <a-form-item>
         <a-button class="loginBtn" type="primary" :loading="loadingState" @click="loginClick"
           >登 录</a-button
@@ -32,6 +37,12 @@ import { InputPassword } from 'ant-design-vue'
 
 const loginStore = useLoginStore()
 
+const isRemmberPwd = ref(false)
+
+const changeRemmberPwd = () => {
+  console.log(isRemmberPwd.value)
+}
+
 const labelCol = ref({
   span: 6
 })
@@ -39,8 +50,8 @@ const labelCol = ref({
 const formRef = ref()
 
 const form: ILoginForm = reactive({
-  name: '',
-  password: ''
+  name: 'coderwhy',
+  password: '123456'
 })
 
 const rules = {
@@ -88,5 +99,10 @@ const loginClick = () => {
   &:hover {
     background-color: #0f0f0f;
   }
+}
+
+.pwdContainer {
+  display: flex;
+  justify-content: right;
 }
 </style>
