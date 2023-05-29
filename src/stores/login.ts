@@ -36,11 +36,18 @@ const useLoginStore = defineStore("login", {
 			const res = await getUserInfoByIdAPI(this.id)
 			local.setCache(cacheKeys.USERINFO, res)
 
+			// bug: 经过测试,手动退出登录后,会发现有时state中的userInfo为undefined
+			// 原因: 在37行将接口返回的数据保存到了本地,但是state中数据根本更新不到,当前获取不到数据,所以为空
+			// 解决: 添加41,42行,将用户信息保存到本地时,同时获取一下本地的用户信息,并更新state,完美解决
+			const userInfo = local.getCache(cacheKeys.USERINFO)
+			this.userInfo = userInfo
+
 			this.getUserMenuTreeAction()
 		},
 
 		async getUserMenuTreeAction() {
-			const res = await getMenuTreeByRoleId(this.userInfo.role.id)
+			console.log(this.userInfo)
+			const res = await getMenuTreeByRoleId(this.userInfo?.role.id)
 			local.setCache(cacheKeys.USER_ROLE_MENU_LIST, res)
 		},
 
