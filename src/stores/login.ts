@@ -1,5 +1,7 @@
 import { defineStore } from "pinia"
 import { loginAPI  } from "@/service/modules"
+import { local } from "@/utils/cache"
+import  { cacheKeys } from "@/type/cacheKeys"
 import type { ILogin } from "@/service/type/login"
 import type { IState } from "./loginType"
 
@@ -8,7 +10,7 @@ const useLoginStore = defineStore("login", {
 		return {
 			id: null ,
 			name: "",
-			token: ""
+			token: local.getCache(cacheKeys.TOKEN)
 		}
 	},
 
@@ -19,7 +21,8 @@ const useLoginStore = defineStore("login", {
 			const res = await loginAPI(account)
 			this.id = res.id
 			this.name = res.name
-			this.token = res.token
+			local.setCache(cacheKeys.TOKEN, res.token)
+
 		}
 	}
 })

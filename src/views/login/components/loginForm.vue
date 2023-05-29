@@ -11,7 +11,7 @@
       </a-form-item>
 
       <a-form-item label="密码" name="password">
-        <a-input v-model:value="form.password" type="password" />
+        <InputPassword v-model:value="form.password" autocomplete="off" />
       </a-form-item>
 
       <a-form-item>
@@ -28,6 +28,7 @@ import { reactive, ref } from 'vue'
 import { SketchOutlined } from '@ant-design/icons-vue'
 import type { ILoginForm } from './loginForm'
 import useLoginStore from '@/stores/login'
+import { InputPassword } from 'ant-design-vue'
 
 const loginStore = useLoginStore()
 
