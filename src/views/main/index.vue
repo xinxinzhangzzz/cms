@@ -4,13 +4,15 @@
   </div> -->
 
   <a-layout class="layout-container">
-    <a-layout-sider class="sidebar">
-      <MenuHeader />
+    <a-layout-sider class="sidebar" :collapsed="toggleMenuWidth">
+      <MenuHeader :toggleMenuWidth="toggleMenuWidth" />
 
       <Menu />
     </a-layout-sider>
     <a-layout>
-      <a-layout-header class="header">Header</a-layout-header>
+      <a-layout-header class="header">
+        <MainHeader @foldChange="flodChange" />
+      </a-layout-header>
       <a-layout-content class="content">Content</a-layout-content>
     </a-layout>
   </a-layout>
@@ -19,12 +21,18 @@
 <script setup lang="ts">
 import useLoginStore from '@/stores/login'
 import { Modal } from 'ant-design-vue'
-import { createVNode } from 'vue'
+import { createVNode, ref } from 'vue'
 import { FrownOutlined } from '@ant-design/icons-vue'
 import MenuHeader from '@/components/Menu/components/MenuHeader.vue'
 import Menu from '@/components/Menu/components/Menu.vue'
+import MainHeader from '@/components/MainHeader/index.vue'
 
 const loginStore = useLoginStore()
+
+const toggleMenuWidth = ref(false)
+const flodChange = (isFlod: boolean) => {
+  toggleMenuWidth.value = isFlod
+}
 
 const logoutClick = () => {
   Modal.confirm({
@@ -51,7 +59,6 @@ const logoutClick = () => {
   }
 
   .header {
-    background-color: bisque;
   }
 
   .content {

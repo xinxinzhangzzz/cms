@@ -12,3 +12,11 @@
 .ant-menu-dark {
   background-color: #020b15;
 }
+
+.ant-layout .ant-layout-header {
+  padding-inline: unset;
+  height: 50px;
+  line-height: 50px;
+  background-color: #020b15;
+  color: aliceblue;
+}
