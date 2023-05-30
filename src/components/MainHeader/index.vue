@@ -7,13 +7,30 @@
       </div>
       <div class="breadcrumb">breadcrumb</div>
     </div>
-    <div class="info">info</div>
+    <div class="info">
+      <div class="icons">
+        <ExpandOutlined class="info-icon" />
+        <GlobalOutlined class="info-icon" />
+        <a href="https://github.com/xinxinzhangzzz/cms" target="blank">
+          <GithubOutlined class="info-icon" />
+        </a>
+      </div>
+
+      <DropDown />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue'
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  ExpandOutlined,
+  GlobalOutlined,
+  GithubOutlined
+} from '@ant-design/icons-vue'
 import { ref } from 'vue'
+import DropDown from './components/DropDown.vue'
 
 const emits = defineEmits(['foldChange'])
 const isFold = ref(false)
@@ -41,6 +58,22 @@ const foldChangeClick = () => {
     }
     .breadcrumb {
       margin-left: 20px;
+    }
+  }
+
+  .info {
+    display: flex;
+    align-items: center;
+    .icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 20px;
+      .info-icon {
+        padding: 0 10px;
+        font-size: 20px;
+        cursor: pointer;
+      }
     }
   }
 }
