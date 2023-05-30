@@ -15,8 +15,9 @@ const useLoginStore = defineStore("login", {
 		return {
 			id: null ,
 			name: "",
-			token: local.getCache(cacheKeys.TOKEN),
-			userInfo: local.getCache(cacheKeys.USERINFO)
+			token: local.getCache(cacheKeys.TOKEN) ?? '',
+			userInfo: local.getCache(cacheKeys.USERINFO) ?? '',
+			userMenusList: local.getCache(cacheKeys.USER_ROLE_MENU_LIST) ?? ''
 		}
 	},
 
@@ -53,12 +54,14 @@ const useLoginStore = defineStore("login", {
 			const userInfo = local.getCache(cacheKeys.USERINFO)
 			this.userInfo = userInfo
 
-			this.getUserMenuTreeAction()
+			await this.getUserMenuTreeAction()
 		},
 
 		async getUserMenuTreeAction() {
 			const res = await getMenuTreeByRoleId(this.userInfo?.role.id)
 			local.setCache(cacheKeys.USER_ROLE_MENU_LIST, res)
+			this.userMenusList = local.getCache(cacheKeys.USER_ROLE_MENU_LIST)
+			console.log(this.userMenusList)
 		},
 
 		logout() {

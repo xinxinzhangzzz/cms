@@ -1,6 +1,6 @@
 <template>
   <div class="menu">
-    <a-menu id="dddddd" style="width: 100%" mode="inline" theme="dark" inlineIndent="30">
+    <!-- <a-menu id="dddddd" style="width: 100%" mode="inline" theme="dark" inlineIndent="30">
       <a-sub-menu>
         <template #icon>
           <RocketOutlined />
@@ -38,17 +38,33 @@
         <a-menu-item>你的故事</a-menu-item>
         <a-menu-item>故事列表</a-menu-item>
       </a-sub-menu>
+    </a-menu> -->
+
+    <a-menu style="width: 100%" mode="inline" theme="dark" :inlineIndent="30">
+      <template v-for="item in currentUserMenu" :key="item.id">
+        <a-sub-menu>
+          <template #icon>
+            <RocketOutlined />
+          </template>
+          <template #title>{{ item.name }}</template>
+
+          <template v-for="childrenItem in item.children" :key="childrenItem.id">
+            <a-menu-item>
+              {{ childrenItem.name }}
+            </a-menu-item>
+          </template>
+        </a-sub-menu>
+      </template>
     </a-menu>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  SettingOutlined,
-  RocketOutlined,
-  ShopOutlined,
-  MessageOutlined
-} from '@ant-design/icons-vue'
+import { RocketOutlined } from '@ant-design/icons-vue'
+import useLoginStore from '@/stores/login'
+
+const loginStore = useLoginStore()
+const currentUserMenu = loginStore.userMenusList
 </script>
 
 <style scoped lang="less"></style>
