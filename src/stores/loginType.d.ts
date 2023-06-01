@@ -5,5 +5,5 @@ export interface IState {
 	name: string
 	token: string
 	userInfo: IUserInfoResult
-	userMenusList: IUserMenuTreeByRoleIdResult
+	userMenusList: IUserMenuTreeByRoleIdResult | any
 }

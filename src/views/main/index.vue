@@ -9,13 +9,18 @@
       <a-layout-header class="header">
         <MainHeader @foldChange="flodChange" />
       </a-layout-header>
-      <a-layout-content class="content">Content</a-layout-content>
+      <a-layout>
+        <a-layout-content>
+          124
+          <router-view></router-view>
+        </a-layout-content>
+      </a-layout>
     </a-layout>
   </a-layout>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 import MenuHeader from '@/components/Menu/components/MenuHeader.vue'
 import Menu from '@/components/Menu/components/Menu.vue'
 import MainHeader from '@/components/MainHeader/index.vue'
@@ -32,10 +37,6 @@ const flodChange = (isFlod: boolean) => {
 
   .sidebar {
     background-color: #020b15;
-  }
-
-  .content {
-    background-color: blueviolet;
   }
 }
 </style>

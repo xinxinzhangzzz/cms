@@ -49,7 +49,7 @@
           <template #title>{{ item.name }}</template>
 
           <template v-for="childrenItem in item.children" :key="childrenItem.id">
-            <a-menu-item>
+            <a-menu-item @click="changeItemClick(childrenItem)">
               {{ childrenItem.name }}
             </a-menu-item>
           </template>
@@ -62,9 +62,15 @@
 <script setup lang="ts">
 import { RocketOutlined } from '@ant-design/icons-vue'
 import useLoginStore from '@/stores/login'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const loginStore = useLoginStore()
 const currentUserMenu = loginStore.userMenusList
+
+const changeItemClick = (childrenItem: any) => {
+  router.push(childrenItem.url)
+}
 </script>
 
 <style scoped lang="less"></style>
