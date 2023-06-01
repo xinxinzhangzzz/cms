@@ -7,6 +7,7 @@ import type { ILogin } from '@/service/type/login'
 import type { IState } from './loginType'
 import { message } from 'ant-design-vue'
 import type { RouteRecordRaw } from 'vue-router'
+import { mapRoutesPathByFiles } from '@/utils/mapRoutesPathByFiles'
 
 const USER_NAME = 'USER_NAME'
 const PASS_WORD = 'PASS_WORD'
@@ -42,29 +43,30 @@ const useLoginStore = defineStore('login', {
 
       await this.getUserInfoAction()
 
-      // 1.动态获取所有的路由对象,放到数组中
-      // 路由对象都在独立的文件中
-      // 从文件中将所有路由对象先读取到数组中
-      const localRoutes: RouteRecordRaw[] = []
+      // // 1.动态获取所有的路由对象,放到数组中
+      // // 路由对象都在独立的文件中
+      // // 从文件中将所有路由对象先读取到数组中
+      // const localRoutes: RouteRecordRaw[] = []
 
-      // 1.1 读取router/main文件夹下中所有的ts文件
-      const files: Record<string, any> = import.meta.glob('@/router/main/**/*.ts', {
-        eager: true
-      })
+      // // 1.1 读取router/main文件夹下中所有的ts文件
+      // const files: Record<string, any> = import.meta.glob('@/router/main/**/*.ts', {
+      //   eager: true
+      // })
 
-      // 1.2 将加载到的路由路径放到localRoutes
-      for (const key in files) {
-        const menusPath = files[key]
-        localRoutes.push(menusPath.default)
-      }
+      // // 1.2 将加载到的路由路径放到localRoutes
+      // for (const key in files) {
+      //   const menusPath = files[key]
+      //   localRoutes.push(menusPath.default)
+      // }
 
-      for (const menus of this.userMenusList) {
-        for (const subMenu of menus.children) {
-          const route: any = localRoutes.find((item) => item.path === subMenu.url)
-          router.addRoute('main', route)
-        }
-      }
+      // for (const menus of this.userMenusList) {
+      //   for (const subMenu of menus.children) {
+      //     const route: any = localRoutes.find((item) => item.path === subMenu.url)
+      //     router.addRoute('main', route)
+      //   }
+      // }
 
+      mapRoutesPathByFiles(this.userMenusList)
       // 2. 根据返回的菜单去匹配并确定要添加的路由表
       router.replace('/main')
     },
@@ -86,6 +88,16 @@ const useLoginStore = defineStore('login', {
       const res = await getMenuTreeByRoleId(this.userInfo?.role.id)
       local.setCache(cacheKeys.USER_ROLE_MENU_LIST, res)
       this.userMenusList = local.getCache(cacheKeys.USER_ROLE_MENU_LIST)
+    },
+
+    userRefreshAfterAction() {
+      const token = local.getCache(cacheKeys.TOKEN)
+      const userInfo = local.getCache(cacheKeys.USERINFO)
+      const userMenusList = local.getCache(cacheKeys.USER_ROLE_MENU_LIST)
+
+      if (token && userInfo && userMenusList) {
+        mapRoutesPathByFiles(this.userMenusList)
+      }
     },
 
     logout() {
