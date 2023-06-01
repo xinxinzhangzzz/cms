@@ -28,3 +28,7 @@ a {
 a:hover {
   color: #fff;
 }
+
+.ant-layout-sider-children {
+  position: fixed;
+}
