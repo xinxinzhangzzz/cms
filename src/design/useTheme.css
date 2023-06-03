@@ -32,3 +32,7 @@ a:hover {
 .ant-layout-sider-children {
   position: fixed;
 }
+
+.ant-menu-title-content {
+  margin-inline-start: unset !important;
+}
