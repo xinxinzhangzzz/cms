@@ -40,7 +40,7 @@
       </a-sub-menu>
     </a-menu> -->
 
-    <a-menu style="width: 100%" mode="inline" theme="dark" :inlineIndent="30">
+    <a-menu :class="{ menuWidth: !toggleMenuWidth }" mode="inline" theme="dark" :inlineIndent="30">
       <template v-for="item in currentUserMenu" :key="item.id">
         <a-sub-menu>
           <template #icon>
@@ -64,6 +64,13 @@ import { RocketOutlined } from '@ant-design/icons-vue'
 import useLoginStore from '@/stores/login'
 import { useRouter } from 'vue-router'
 
+defineProps({
+  toggleMenuWidth: {
+    type: Boolean,
+    defalut: false
+  }
+})
+
 const router = useRouter()
 const loginStore = useLoginStore()
 const currentUserMenu = loginStore.userMenusList
@@ -73,4 +80,8 @@ const changeItemClick = (childrenItem: any) => {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.menuWidth {
+  width: 200px;
+}
+</style>
