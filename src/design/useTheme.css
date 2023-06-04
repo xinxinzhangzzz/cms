@@ -33,6 +33,10 @@ a:hover {
   position: fixed;
 }
 
+.ant-menu-submenu.ant-menu-submenu-inline {
+  width: 100% !important;
+}
+
 .ant-menu-title-content {
   margin-inline-start: unset !important;
 }
