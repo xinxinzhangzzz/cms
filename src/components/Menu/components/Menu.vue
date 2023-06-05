@@ -40,15 +40,22 @@
       </a-sub-menu>
     </a-menu> -->
 
-    <a-menu :class="{ menuWidth: !toggleMenuWidth }" mode="inline" theme="dark" :inlineIndent="30">
-      <template v-for="item in currentUserMenu" :key="item.id">
+    <a-menu
+      :class="{ menuWidth: !toggleMenuWidth }"
+      mode="inline"
+      theme="dark"
+      :inlineIndent="30"
+      :selectedKeys="[route.path]"
+      :openKeys="openKeys"
+    >
+      <template v-for="item in currentUserMenu" :key="item.url">
         <a-sub-menu>
           <template #icon>
             <RocketOutlined />
           </template>
           <template #title>{{ item.name }}</template>
 
-          <template v-for="childrenItem in item.children" :key="childrenItem.id">
+          <template v-for="childrenItem in item.children" :key="childrenItem.url">
             <a-menu-item @click="changeItemClick(childrenItem)">
               {{ childrenItem.name }}
             </a-menu-item>
@@ -62,7 +69,7 @@
 <script setup lang="ts">
 import { RocketOutlined } from '@ant-design/icons-vue'
 import useLoginStore from '@/stores/login'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 defineProps({
   toggleMenuWidth: {
@@ -72,12 +79,25 @@ defineProps({
 })
 
 const router = useRouter()
+const route = useRoute()
 const loginStore = useLoginStore()
 const currentUserMenu = loginStore.userMenusList
 
 const changeItemClick = (childrenItem: any) => {
   router.push(childrenItem.url)
 }
+
+const activeParentMenu = (defaultPath: any) => {
+  for (const menus of currentUserMenu) {
+    for (const childrenItem of menus.children) {
+      if (childrenItem.url === defaultPath) {
+        return [menus.url]
+      }
+    }
+  }
+}
+
+const openKeys = activeParentMenu(route.path)
 </script>
 
 <style scoped lang="less">

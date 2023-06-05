@@ -6,7 +6,6 @@ import { cacheKeys } from '@/type/cacheKeys'
 import type { ILogin } from '@/service/type/login'
 import type { IState } from './loginType'
 import { message } from 'ant-design-vue'
-import type { RouteRecordRaw } from 'vue-router'
 import { mapRoutesPathByFiles } from '@/utils/mapRoutesPathByFiles'
 
 const USER_NAME = 'USER_NAME'
