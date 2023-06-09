@@ -40,3 +40,18 @@ a:hover {
 .ant-menu-title-content {
   margin-inline-start: unset !important;
 }
+
+/* 面包屑样式 */
+.ant-breadcrumb,
+.ant-breadcrumb-link,
+.ant-breadcrumb-link > a {
+  color: #fff;
+  cursor: pointer;
+}
+
+.ant-breadcrumb-link > a:hover {
+  color: #fff;
+}
+.ant-breadcrumb-separator {
+  color: #fff !important;
+}

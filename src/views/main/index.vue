@@ -11,7 +11,6 @@
       </a-layout-header>
       <a-layout>
         <a-layout-content>
-          124
           <router-view></router-view>
         </a-layout-content>
       </a-layout>

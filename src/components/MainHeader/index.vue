@@ -5,7 +5,9 @@
         <MenuFoldOutlined v-show="isFold === false" class="icon" />
         <MenuUnfoldOutlined v-show="isFold === true" class="icon" />
       </div>
-      <div class="breadcrumb">breadcrumb</div>
+      <div class="breadcrumb">
+        <Breadcrumb />
+      </div>
     </div>
     <div class="info">
       <div class="icons">
@@ -31,6 +33,7 @@ import {
 } from '@ant-design/icons-vue'
 import { ref } from 'vue'
 import DropDown from './components/DropDown.vue'
+import Breadcrumb from "../Breadcrumb/index.vue"
 
 const emits = defineEmits(['foldChange'])
 const isFold = ref(false)
@@ -50,12 +53,14 @@ const foldChangeClick = () => {
 
   .left-section {
     display: flex;
+    align-items: center;
     padding: 0 20px 0 0;
 
     .fold .icon {
       font-size: 20px;
       cursor: pointer;
     }
+
     .breadcrumb {
       margin-left: 20px;
     }
@@ -64,11 +69,13 @@ const foldChangeClick = () => {
   .info {
     display: flex;
     align-items: center;
+
     .icons {
       display: flex;
       justify-content: center;
       align-items: center;
       margin-right: 20px;
+
       .info-icon {
         padding: 0 10px;
         font-size: 20px;
