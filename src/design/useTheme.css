@@ -21,6 +21,10 @@
   color: aliceblue;
 }
 
+.ant-layout-content {
+  padding: 20px;
+}
+
 a {
   color: #fff;
 }
@@ -54,4 +58,8 @@ a:hover {
 }
 .ant-breadcrumb-separator {
   color: #fff !important;
+}
+
+.ant-table-wrapper .ant-table-pagination-right {
+  justify-content: center;
 }

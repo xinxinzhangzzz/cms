@@ -10,7 +10,7 @@
         <MainHeader @foldChange="flodChange" />
       </a-layout-header>
       <a-layout>
-        <a-layout-content>
+        <a-layout-content class="content">
           <router-view></router-view>
         </a-layout-content>
       </a-layout>
@@ -36,6 +36,11 @@ const flodChange = (isFlod: boolean) => {
 
   .sidebar {
     background-color: #020b15;
+  }
+
+  .content {
+    height: calc(100vh - 50px);
+    overflow-y: scroll;
   }
 }
 </style>
