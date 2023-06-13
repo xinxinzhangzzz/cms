@@ -9,7 +9,7 @@
 					</div>
 				</div>
 			</template>
-			<a-table :dataSource="userList" :columns="columns" bordered>
+			<a-table :dataSource="userList" :columns="columns" bordered :pagination="pagination" @change="changeFn">
 				<template v-slot:index="text, record, index">{{ index }}</template>
 
 				<template #name="{ name }">{{ name }}</template>
@@ -41,6 +41,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue"
 import {
 	useUserStore
 } from '@/stores/main/user';
@@ -48,9 +49,14 @@ import { storeToRefs } from "pinia"
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons-vue"
 
 const userStore = useUserStore()
-userStore.getUserListAction()
-const { userList } = storeToRefs(userStore)
+userStore.getUserListAction({ offset: 0, size: 10 })
+const { userList, userListTotalCount } = storeToRefs(userStore)
 import { formatTimeUTC } from "@/utils/format"
+
+const pagination = ref({
+	pageSize: 10,
+	total: userListTotalCount,
+})
 
 const columns = [
 	{
@@ -123,6 +129,12 @@ const columns = [
 // 		address: '西湖区湖底公园1号',
 // 	},
 // ]
+
+const changeFn = (page: any) => {
+	console.log(page)
+	console.log(userStore.userList)
+	userStore.getUserListAction({ offset: page.current, size: page.pageSize })
+}
 </script>
 
 <style scoped lang="less">

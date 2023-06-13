@@ -13,8 +13,8 @@ export const useUserStore = defineStore('user', {
   getters: {},
 
   actions: {
-    async getUserListAction() {
-      const { list, totalCount } = await getUserListAPI()
+    async getUserListAction(queryParams: any) {
+      const { list, totalCount } = await getUserListAPI(queryParams)
       this.userList = list
       this.userListTotalCount = totalCount
     }
