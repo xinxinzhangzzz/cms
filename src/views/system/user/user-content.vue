@@ -10,7 +10,19 @@
 				</div>
 			</template>
 			<a-table :dataSource="userList" :columns="columns" bordered>
+				<template v-slot:index="text, record, index">{{ index }}</template>
+
 				<template #name="{ name }">{{ name }}</template>
+
+				<template #enable="{ text: enable }">
+					<a-tag :color="enable === 1 ? 'green' : 'red'">
+						{{ enable === 1 ? '启用' : "禁用" }}
+					</a-tag>
+				</template>
+
+				<template v-slot:createAt="text">{{ formatTimeUTC(text.value) }}</template>
+
+				<template v-slot:updateAt="text">{{ formatTimeUTC(text.value) }}</template>
 
 				<template #operation>
 					<a-button type="text" size="small">
@@ -38,9 +50,17 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons-vue"
 const userStore = useUserStore()
 userStore.getUserListAction()
 const { userList } = storeToRefs(userStore)
-console.log(userList, 'aaa')
+import { formatTimeUTC } from "@/utils/format"
 
 const columns = [
+	{
+		title: '序号',
+		align: "center",
+		width: 80,
+		customRender: ({ text, record, index }) => {
+			return `${index + 1}`;
+		}
+	},
 	{
 		title: '用户名',
 		dataIndex: 'name',
@@ -63,25 +83,29 @@ const columns = [
 		title: '状态',
 		dataIndex: 'enable',
 		key: 'enable',
-		align: 'center'
+		align: 'center',
+		slots: { customRender: 'enable' }
 	},
 	{
 		title: '创建时间',
 		dataIndex: 'createAt',
 		key: 'crreateAt',
-		align: 'center'
+		align: 'center',
+		slots: { customRender: 'createAt' }
 	},
 	{
 		title: '更新时间',
 		dataIndex: 'updateAt',
 		key: 'updateAt',
-		align: 'center'
+		align: 'center',
+		slots: { customRender: 'updateAt' }
 	},
 	{
 		title: '操作',
 		align: 'center',
 		slots: { customRender: 'operation' },
-	}
+	},
+
 ]
 
 // const userListData = [
