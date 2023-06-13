@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
 import { getUserListAPI } from '@/service/modules/main/user'
+import type { IUserState } from './userType'
 
 export const useUserStore = defineStore('user', {
-  state: () => {
+  state: (): IUserState => {
     return {
       userList: [],
       userListTotalCount: 0

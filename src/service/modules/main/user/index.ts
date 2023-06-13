@@ -1,7 +1,8 @@
 import hyRequest from '../../../http'
+import type { IUserListResult } from '@/service/type/user'
 
 export const getUserListAPI = () =>
-  hyRequest.post({
+  hyRequest.post<IUserListResult>({
     url: '/users/list',
     data: {
       offset: 0,
